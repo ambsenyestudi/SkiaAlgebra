@@ -54,29 +54,46 @@ namespace SkiaSharpControl.Draw.Scene
         }
         public void DrawUnitSegements(SKCanvas canvas)
         {
-            double xSize = Math.Min((MaxSize.X - MinSize.X), (MaxSize.Y - MinSize.Y));
-            xSize /= 2;
-            double segWidth = (xSize / UnitSize) - defaultStrokeWidth;
-            int totalaSegments = (int)(xSize / segWidth);
+            double xminSize = Math.Min((MaxSize.X - MinSize.X), (MaxSize.Y - MinSize.Y))/2;
+            xminSize -= defaultStrokeWidth / 2;
+            double segWidth = (xminSize / UnitSize);
+            double xmaxSize = Math.Max((MaxSize.X - MinSize.X), (MaxSize.Y - MinSize.Y))/2;
+            int totalaSegments = (int)(xmaxSize / segWidth);
             for (int i = 0; i < totalaSegments; i++)
             {
                 float currSeg = (float)(segWidth * (i + 1));
-                var leftPath = new SKPath();
-                leftPath.MoveTo((int)(Center.X - currSeg), (int)(Center.Y - defaultUnitSegementSize));
-                leftPath.LineTo((int)(Center.X - currSeg), (int)(Center.Y + defaultUnitSegementSize));
-                canvas.DrawPath(leftPath, XStroke);
-                var rightPath = new SKPath();
-                rightPath.MoveTo((int)(Center.X + currSeg), (int)(Center.Y - defaultUnitSegementSize));
-                rightPath.LineTo((int)(Center.X + currSeg), (int)(Center.Y + defaultUnitSegementSize));
-                canvas.DrawPath(rightPath, XStroke);
-                var topPath = new SKPath();
-                topPath.MoveTo((int)(Center.X - defaultUnitSegementSize), (int)(Center.Y - currSeg));
-                topPath.LineTo((int)(Center.X + defaultUnitSegementSize), (int)(Center.Y - currSeg));
-                canvas.DrawPath(topPath, YStroke);
-                var bottomPath = new SKPath();
-                bottomPath.MoveTo((int)(Center.X - defaultUnitSegementSize), (int)(Center.Y + currSeg));
-                bottomPath.LineTo((int)(Center.X + defaultUnitSegementSize), (int)(Center.Y + currSeg));
-                canvas.DrawPath(bottomPath, YStroke);
+
+                int leftOrg = (int)(Center.X - currSeg);
+                if (leftOrg > MinSize.X)
+                {
+                    var leftPath = new SKPath();
+                    leftPath.MoveTo(leftOrg, (int)(Center.Y - defaultUnitSegementSize));
+                    leftPath.LineTo(leftOrg, (int)(Center.Y + defaultUnitSegementSize));
+                    canvas.DrawPath(leftPath, XStroke);
+                }
+                int rightOrg = (int)(Center.X + currSeg);
+                if(rightOrg < MaxSize.X)
+                {
+                    var rightPath = new SKPath();
+                    rightPath.MoveTo(rightOrg, (int)(Center.Y - defaultUnitSegementSize));
+                    rightPath.LineTo(rightOrg, (int)(Center.Y + defaultUnitSegementSize));
+                    canvas.DrawPath(rightPath, XStroke);
+                }
+                int topOrg = (int)(Center.Y - currSeg);
+                if (topOrg > MinSize.Y)
+                {
+                    var topPath = new SKPath();
+                    topPath.MoveTo((int)(Center.X - defaultUnitSegementSize), topOrg);
+                    topPath.LineTo((int)(Center.X + defaultUnitSegementSize), topOrg);
+                    canvas.DrawPath(topPath, YStroke);
+                }
+                int bottomOrg = (int)(Center.Y + currSeg);
+                if (bottomOrg < MaxSize.Y) {
+                    var bottomPath = new SKPath();
+                    bottomPath.MoveTo((int)(Center.X - defaultUnitSegementSize), bottomOrg);
+                    bottomPath.LineTo((int)(Center.X + defaultUnitSegementSize), bottomOrg);
+                    canvas.DrawPath(bottomPath, YStroke);
+                }
             }
         }
     }

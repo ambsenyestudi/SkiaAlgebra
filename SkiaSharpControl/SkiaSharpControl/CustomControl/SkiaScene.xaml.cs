@@ -33,7 +33,7 @@ namespace SkiaSharpControl.CustomControl
             canvas.Clear(SKColors.White);
             if(grid==null)
             {
-                grid = new SceneGrid(info.GetCanvasCenter(), info.GetCanvasSize(), 5f);
+                grid = new SceneGrid(info.GetCanvasCenter(), info.GetCanvasSize(), 3f);
             }
             grid.Draw(canvas);
         }
