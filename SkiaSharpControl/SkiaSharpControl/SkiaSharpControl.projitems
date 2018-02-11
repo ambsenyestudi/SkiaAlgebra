@@ -25,6 +25,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Draw\BaseShape.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Draw\Scene\Arrow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Draw\Scene\SceneGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extension\SkiaExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
